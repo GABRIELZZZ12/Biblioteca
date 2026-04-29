@@ -6,41 +6,62 @@ Sistema web desenvolvido com Flask para gerenciamento de livros, pessoas e empr�
 
 ## 🚀 Tecnologias utilizadas
 
-* Python
-* Flask
-* MySQL
-* HTML
+- Python 3.11+
+- Flask
+- MySQL
+- HTML/CSS
+- Jinja2 (Templates)
 
 ---
 
 ## ⚙️ Funcionalidades
 
-* Cadastro de livros
-* Cadastro de pessoas
-* Controle de empréstimos
-* Validação de faixa etária
+- ✅ Cadastro de livros
+- ✅ Cadastro de pessoas
+- ✅ Controle de empréstimos
+- ✅ Validação de faixa etária
+- ✅ Edição e exclusão de registros
+- ✅ Interface web amigável
+
+---
+
+## 📁 Estrutura do projeto
+Biblioteca/
+└── project/
+└── product/
+├── main.py # Arquivo principal da aplicação
+└── templates/ # Templates HTML
+├── base.html # Template base
+├── index.html # Página inicial
+├── livro.html # Gerenciar livros
+├── pessoa.html # Gerenciar pessoas
+├── emprestimo.html # Gerenciar empréstimos
+└── editar_livro.html # Editar livros
+
+text
 
 ---
 
 ## 🛠️ Como rodar o projeto
 
-### 1. Clonar o repositório
+### 1. Clone o repositório
 
-git clone https://github.com/seu-usuario/biblioteca-flask.git
+```bash
+git clone https://github.com/GABRIELZZZ12/Biblioteca.git
+cd Biblioteca
+Importante: Todos os comandos abaixo devem ser executados a partir da raiz do repositório (pasta Biblioteca/).
 
----
-
-### 2. Instalar dependências
-
+2. Instale as dependências
+bash
 pip install -r requirements.txt
+Se não tiver o arquivo requirements.txt, instale manualmente:
 
----
+bash
+pip install flask mysql-connector-python python-dotenv
+3. Configure o banco de dados MySQL
+Abra o MySQL e execute os comandos abaixo:
 
-### 3. Configurar o banco de dados
-
-Abra o MySQL e execute:
-
-```sql
+sql
 CREATE DATABASE biblioteca;
 USE biblioteca;
 
@@ -68,40 +89,66 @@ CREATE TABLE emprestimos (
     FOREIGN KEY (pessoa_id) REFERENCES pessoas(id),
     FOREIGN KEY (livro_id) REFERENCES livros(id)
 );
-```
+4. Configure as variáveis de ambiente
+Crie um arquivo chamado .env na raiz do projeto (Biblioteca/) e adicione:
 
----
-
-### 4. Criar arquivo `.env`
-
-Crie um arquivo chamado `.env` na raiz do projeto e adicione:
-
+env
 MYSQL_HOST=localhost
 MYSQL_USER=root
 MYSQL_PASSWORD=sua_senha
 MYSQL_DB=biblioteca
+⚠️ Atenção: Substitua sua_senha pela sua senha real do MySQL. O arquivo .env não é enviado ao GitHub por segurança.
 
----
+5. Execute o projeto
+bash
+cd project/product
+python main.py
+6. Acesse no navegador
+Abra o navegador e acesse o endereço local que aparecer no prompt de comando
 
-### 5. Executar o projeto
+Para parar o servidor, pressione Ctrl + C no terminal.
 
-python project/product/main.py
+📝 Possíveis problemas e soluções
+Erro: TemplateNotFound: index.html
+Solução: Certifique-se de que a pasta templates está dentro de project/product/ e contém todos os arquivos HTML.
 
----
+Erro: ModuleNotFoundError: No module named 'flask'
+Solução: Instale as dependências novamente:
 
-### 6. Acessar no navegador
+bash
+pip install flask mysql-connector-python python-dotenv
+Erro de conexão com MySQL
+Solução: Verifique se:
 
-http://localhost:5000
+O MySQL está rodando
 
----
+As credenciais no arquivo .env estão corretas
 
-## 💡 Observações
+O banco de dados biblioteca foi criado
 
-* O arquivo `.env` não é enviado para o repositório por segurança
-* Certifique-se de que o MySQL está rodando
 
----
+💡 Observações importantes
+O arquivo .env não é enviado para o repositório por segurança (está no .gitignore)
 
-## 👨‍💻 Autor
+Certifique-se de que o MySQL está rodando antes de executar o projeto
 
+O servidor Flask executa em modo debug por padrão (recarrega automaticamente ao salvar alterações)
+
+📦 Criar arquivo requirements.txt
+Se ainda não existe, gere o arquivo com:
+
+bash
+pip freeze > requirements.txt
+Conteúdo esperado:
+
+text
+flask
+mysql-connector-python
+python-dotenv
+👨‍💻 Autor
 Gabriel Rodrigues
+
+GitHub: @GABRIELZZZ12
+
+📄 Licença
+Este projeto está sob a licença MIT
