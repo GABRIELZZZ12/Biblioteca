@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Registrar Empréstimo{% endblock %}
+
+{% block content %}
+    <h2 style="text-align:center; color:#d53601;">Novo Empréstimo</h2>
+
+    <!-- Formulário de pesquisa -->
+    <form method="GET" action="/emprestimo" style="max-width:500px; margin:0 auto;">
+        <div class="form-group">
+            <label for="q_pessoa">Pesquisar Pessoa:</label>
+            <input type="text" name="q_pessoa" placeholder="Digite o nome...">
+        </div>
+
+        <div class="form-group">
+            <label for="q_livro">Pesquisar Livro:</label>
+            <input type="text" name="q_livro" placeholder="Digite o título...">
+        </div>
+
+        <button type="submit">Filtrar</button>
+    </form>
+
+    <!-- Formulário de registro de empréstimo -->
+    <form method="POST" action="/emprestimo" style="max-width:500px; margin:2rem auto;">
+        <div class="form-group">
+            <label for="pessoa_id">Pessoa:</label>
+            <select name="pessoa_id" required>
+                {% for pessoa in pessoas %}
+                    <option value="{{ pessoa[0] }}">{{ pessoa[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="livro_id">Livro:</label>
+            <select name="livro_id" required>
+                {% for livro in livros %}
+                    <option value="{{ livro[0] }}">{{ livro[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="data_emprestimo">Data do Empréstimo:</label>
+            <input type="date" name="data_emprestimo" value="{{ hoje }}" readonly>
+        </div>
+
+        <button type="submit">Registrar</button>
+          <!-- Mensagem de erro -->
+        {% if erro %}
+            <p style="color:red; text-align:center; font-weight:bold; margin-top:1rem;">
+                {{ erro }}
+                </p>
+        {% endif %}
+    </form>
+
+    {% if emprestimos %}
+    <table>
+        <br>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Pessoa</th>
+                <th>Livro</th>
+                <th>Data do Empréstimo</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emprestimo in emprestimos %}
+            <tr>
+                <td>{{ emprestimo[0] }}</td>
+                <td>{{ emprestimo[1] }}</td>
+                <td>{{ emprestimo[2] }}</td>
+                <td>{{ emprestimo[3] }}</td>
+                <td>
+                    {% if emprestimo[4] %}
+                        Devolvido em {{ emprestimo[4] }}
+                    {% else %}
+                        <form method="POST" action="/devolucao/{{ emprestimo[0] }}">
+                            <button type="submit">Registrar Devolução</button>
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p style="text-align:center; margin-top:2rem;">Nenhum empréstimo registrado ainda.</p>
+    {% endif %}
+{% endblock %}

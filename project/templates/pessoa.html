@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Cadastrar Pessoa{% endblock %}
+
+{% block content %}
+<h2 style="text-align:center; color:#d53601;">Cadastrar Pessoa</h2>
+<form method="POST" action="/pessoa" style="max-width:500px; margin:0 auto;">
+    
+    <div class="form-group">
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" required>
+    </div>
+
+    <div class="form-group">
+        <label for="contato">Contato:</label>
+        <input type="text" name="contato">
+    </div>
+
+    <div class="form-group">
+        <label for="ano_nascimento">Ano de Nascimento:</label>
+        <input type="number" name="ano_nascimento" min="1900">
+    </div>
+
+    <button type="submit">Cadastrar</button>
+</form>
+
+{% if pessoas %}
+<table>
+    <br>
+    <caption></caption>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Contato</th>
+            <th>Ano de Nascimento</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pessoa in pessoas %}
+        <tr>
+            <td>{{ pessoa[0] }}</td>
+            <td>{{ pessoa[1] }}</td>
+            <td>{{ pessoa[2] }}</td>
+            <td>{{ pessoa[3] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p style="text-align:center; margin-top:2rem;">Nenhuma pessoa cadastrada ainda.</p>
+{% endif %}
+{% endblock %}

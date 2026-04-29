@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Cadastrar Livro{% endblock %}
+
+{% block content %}
+<h2 style="text-align:center; color:#d53601;">Cadastrar Livro</h2>
+<form method="POST" action="/livro" style="max-width:500px; margin:0 auto;">
+    
+    <div class="form-group">
+        <label for="titulo">Título:</label>
+        <input type="text" name="titulo" required>
+    </div>
+
+    <div class="form-group">
+        <label for="autor">Autor:</label>
+        <input type="text" name="autor" required>
+    </div>
+
+    <div class="form-group">
+        <label for="ano">Ano:</label>
+        <input type="number" name="ano" min="1000">
+    </div>
+
+    <div class="form-group">
+        <label for="faixa_etaria">Faixa Etária:</label>
+        <input type="text" name="faixa_etaria">
+    </div>
+
+    <button type="submit">Cadastrar</button>
+</form>
+
+{% if livros %}
+<table>
+   <br>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Ano</th>
+            <th>Faixa Etária</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for livro in livros %}
+        <tr>
+            <td>{{ livro[0] }}</td>
+            <td>{{ livro[1] }}</td>
+            <td>{{ livro[2] }}</td>
+            <td>{{ livro[3] }}</td>
+            <td>{{ livro[4] }}</td>
+            <td>
+                <!-- Botão Editar (azul) -->
+                <a href="/livro/editar/{{ livro[0] }}">
+                    <button type="button" style="background-color:#007BFF; color:white; margin-right:5px;">
+                        Editar
+                    </button>
+                </a>
+
+                <!-- Botão Excluir (vermelho) com confirmação -->
+                <form method="POST" action="/livro/delete/{{ livro[0] }}" style="display:inline;">
+                    <button type="submit" style="background-color:#DC3545; color:white;"
+                        onclick="return confirm('Tem certeza que deseja excluir este livro?');">
+                        Excluir
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p style="text-align:center; margin-top:2rem;">Nenhum livro cadastrado ainda.</p>
+{% endif %}
+{% endblock %}
+
